@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "djoser",
     "drf_spectacular",
+    "markdownx",
     "core",
     "user",
 ]

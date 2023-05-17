@@ -27,5 +27,6 @@ urlpatterns = [
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger",
     ),
+    path("markdownx/", include("markdownx.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
