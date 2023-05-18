@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db import models
+from django import forms
 from django_ace import AceWidget
 from markdownx.admin import MarkdownxModelAdmin
 from .models import Task, TaskTemplate, TaskReaction, Language, Topic, TaskSubmission
@@ -8,11 +9,19 @@ from .models import Task, TaskTemplate, TaskReaction, Language, Topic, TaskSubmi
 # TODO: add django-jazzmin for better admin page interface
 
 
+class TaskAdminForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = "__all__"
+        widgets = {
+            "solution_code": AceWidget(mode="python", theme="monokai"),
+        }
+
+
 @admin.register(Task)
 class TaskAdmin(MarkdownxModelAdmin):
-    formfield_overrides = {
-        models.TextField: {"widget": AceWidget(mode="python", theme="monokai")},
-    }
+    form = TaskAdminForm
+    filter_horizontal = ("topics",)
 
 
 @admin.register(TaskTemplate)
