@@ -25,6 +25,9 @@ class Language(TimeStampAbstract):
 
     name = models.CharField(max_length=63, choices=LanguageChoices.choices, unique=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Task(TimeStampAbstract):
     class TaskDifficulty(models.IntegerChoices):
@@ -36,7 +39,9 @@ class Task(TimeStampAbstract):
     description = MarkdownxField()
     solution = MarkdownxField()
     solution_code = models.TextField()  # TODO: add django-ace
-    code_language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    code_language = models.ForeignKey(
+        Language, on_delete=models.CASCADE, default=Language.LanguageChoices.PYTHON
+    )
     difficulty = models.IntegerField(choices=TaskDifficulty.choices)
 
     def __str__(self) -> str:

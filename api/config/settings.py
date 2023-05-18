@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "djoser",
     "drf_spectacular",
     "markdownx",
+    "django_ace",
     "core",
     "user",
 ]
