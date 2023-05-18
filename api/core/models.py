@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils.text import slugify
 from markdownx.models import MarkdownxField
 
 
@@ -36,9 +37,10 @@ class Task(TimeStampAbstract):
         HARD = 3, "Hard"
 
     name = models.CharField(max_length=127, unique=True)
+    slug = models.SlugField(unique=True, db_index=True)
     description = MarkdownxField()
     solution = MarkdownxField()
-    solution_code = models.TextField()  # TODO: add django-ace
+    solution_code = models.TextField()
     code_language = models.ForeignKey(
         Language, on_delete=models.CASCADE, default=Language.LanguageChoices.PYTHON
     )
@@ -47,11 +49,16 @@ class Task(TimeStampAbstract):
     def __str__(self) -> str:
         return self.name
 
+    def save(self, *args, **kwargs) -> "Task":
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
+
 
 class TaskTemplate(TimeStampAbstract):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
-    code_template = models.TextField()  # TODO: add django-ace
+    code_template = models.TextField()
 
     class Meta:
         unique_together = ("task", "language")
@@ -65,7 +72,7 @@ class TaskReaction(TimeStampAbstract):
         LIKE = "LIKE", "Like"
         DISLIKE = "DISLIKE", "Dislike"
 
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="reactions")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     reaction = models.CharField(max_length=63, choices=ReactionChoices.choices)
 
@@ -83,10 +90,10 @@ class TaskSubmission(TimeStampAbstract):
         WRONG_ANSWER = "WRONG_ANSWER", "Wrong answer"
         TIME_LIMIT_EXCEEDED = "TIME_LIMIT_EXCEEDED", "Time limit exceeded"
 
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="submissions")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     status = models.CharField(max_length=63, choices=StatusChoices.choices)
-    code = models.TextField()  # TODO: add django-ace
+    code = models.TextField()
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     runtime = models.IntegerField(db_comment="Runtime in ms")
 
