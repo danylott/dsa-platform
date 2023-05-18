@@ -39,4 +39,6 @@ class TopicAdmin(admin.ModelAdmin):
 
 @admin.register(TaskSubmission)
 class TaskSubmissionAdmin(admin.ModelAdmin):
-    pass
+    formfield_overrides = {
+        models.TextField: {"widget": AceWidget(mode="text", theme="monokai")},
+    }

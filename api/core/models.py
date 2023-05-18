@@ -45,6 +45,7 @@ class Task(TimeStampAbstract):
         Language, on_delete=models.CASCADE, default=Language.LanguageChoices.PYTHON
     )
     difficulty = models.IntegerField(choices=TaskDifficulty.choices)
+    topics = models.ManyToManyField(Topic, related_name="tasks")
 
     def __str__(self) -> str:
         return self.name
