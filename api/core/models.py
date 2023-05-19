@@ -60,12 +60,22 @@ class TaskTemplate(TimeStampAbstract):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     code_template = models.TextField()
+    code_runner = models.TextField()
 
     class Meta:
         unique_together = ("task", "language")
 
     def __str__(self) -> str:
         return f"{self.task.name} - {self.language.name}"
+
+
+class TaskTestCase(TimeStampAbstract):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="test_cases")
+    input = models.TextField()
+    output = models.TextField()
+
+    def __str__(self) -> str:
+        return f"{self.task.name} - {self.input}"
 
 
 class TaskReaction(TimeStampAbstract):

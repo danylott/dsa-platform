@@ -1,0 +1,18 @@
+service: task-checker-python
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.10
+  httpApi:
+    cors: true
+
+functions:
+  check_task:
+    handler: main.check_task
+    events:
+      - httpApi:
+          method: POST
+          path: /check_task
+    timeout: 5
