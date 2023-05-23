@@ -1,5 +1,6 @@
 from typing import Type
 
+import requests
 from django.contrib.auth import get_user_model
 from django.db.models import QuerySet
 from rest_framework import viewsets, mixins, status
@@ -113,11 +114,35 @@ class TaskSubmissionViewSet(
         self, serializer: TaskSubmissionCreateSerializer
     ) -> TaskSubmission:
         task = Task.objects.get(slug=self.kwargs["task_slug"])
-        # TODO: here run the tests for code
-        runtime = 50
-        result_status = TaskSubmission.StatusChoices.ERROR
+        task_template = TaskTemplate.objects.get(
+            task=task, language=serializer.validated_data["language"]
+        )
+        code = f"{serializer.validated_data['code']}\n{task_template.code_runner}"
+        test_cases = [
+            {"input": test_case.input, "output": test_case.output}
+            for test_case in task.test_cases.all()
+        ]
+        # TODO: fix hardcode
+        python_url = "https://28tz15mu48.execute-api.us-east-1.amazonaws.com/check_task"
+        response = requests.post(
+            python_url,
+            json={"code": code, "test_cases": test_cases},
+        )
+        if response.status_code == 200:
+            runtime = response.json()["runtime"]
+            result_status = response.json()["status"]
+            message = response.json()["message"]
+        else:
+            runtime = 5000
+            result_status = TaskSubmission.StatusChoices.TIME_LIMIT_EXCEEDED
+            message = f"Time Limit"
+
         return serializer.save(
-            user=self.request.user, task=task, runtime=runtime, status=result_status
+            user=self.request.user,
+            task=task,
+            runtime=runtime,
+            status=result_status,
+            result_message=message,
         )
 
 

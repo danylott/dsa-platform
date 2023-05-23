@@ -107,6 +107,7 @@ class TaskSubmission(TimeStampAbstract):
     code = models.TextField()
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
     runtime = models.IntegerField(db_comment="Runtime in ms")
+    result_message = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ("-created_at",)

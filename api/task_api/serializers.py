@@ -134,7 +134,11 @@ class TaskSubmissionListSerializer(serializers.ModelSerializer):
 
 class TaskSubmissionDetailSerializer(TaskSubmissionListSerializer):
     class Meta(TaskSubmissionListSerializer.Meta):
-        fields = TaskSubmissionListSerializer.Meta.fields + ("code", "runtime")
+        fields = TaskSubmissionListSerializer.Meta.fields + (
+            "code",
+            "runtime",
+            "result_message",
+        )
 
 
 class TaskSubmissionCreateSerializer(serializers.ModelSerializer):
