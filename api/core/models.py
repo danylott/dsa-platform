@@ -37,7 +37,7 @@ class Task(TimeStampAbstract):
         HARD = 3, "Hard"
 
     name = models.CharField(max_length=127, unique=True)
-    slug = models.SlugField(unique=True, db_index=True)
+    slug = models.SlugField(unique=True, db_index=True, blank=True)
     description = MarkdownxField()
     solution = MarkdownxField()
     solution_code = models.TextField()

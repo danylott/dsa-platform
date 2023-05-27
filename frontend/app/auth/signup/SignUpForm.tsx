@@ -9,10 +9,6 @@ import SignUpLastName
   from '@/app/auth/signup/SignUpLastName';
 import SignUpCompany
   from '@/app/auth/signup/SignUpCompany';
-import SignUpProjectName
-  from '@/app/auth/signup/SignUpProjectName';
-import SignUpWebsiteLink
-  from '@/app/auth/signup/SignUpWebsiteLink';
 import SignUpEmail
   from '@/app/auth/signup/SignUpEmail';
 import SignUpPassword
@@ -51,10 +47,6 @@ export default function SignUpForm({ form, onFinish, loading }: Props) {
       </Row>
 
       <SignUpCompany />
-
-      <SignUpProjectName />
-
-      <SignUpWebsiteLink />
 
       <SignUpEmail />
 

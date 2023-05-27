@@ -1,6 +1,7 @@
 {
   "extends": [
     "next/core-web-vitals",
+    "@mate-academy/eslint-config-react-internal",
     "plugin:@next/next/recommended"
   ],
   "globals": {
@@ -34,4 +35,3 @@
     "@typescript-eslint/no-empty-interface": "off"
   }
 }
-

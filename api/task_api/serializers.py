@@ -55,7 +55,7 @@ class TaskListSerializer(serializers.ModelSerializer):
         ).count()
 
         if count_submissions == 0:
-            return None
+            return "Todo"
 
         if count_accepted_submissions == 0:
             return "Attempted"

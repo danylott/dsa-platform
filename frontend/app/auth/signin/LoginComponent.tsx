@@ -8,32 +8,11 @@ import { getSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { errorTemplate } from '@/utils/notifications';
-import { get } from '@/utils/requests';
-import { ProjectData } from '@/app/[projectId]/projects/ProjectsTable';
 
 export default function LoginComponent() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [notificationsApi, contextHolder] = notification.useNotification();
-
-  async function navigateToDashboard(token: string | undefined) {
-    const projectsResult = await get({
-      url: '/api/projects/',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!projectsResult?.ok) {
-      notificationsApi.error(errorTemplate('No projects found'));
-
-      return;
-    }
-
-    const projects: ProjectData[] = await projectsResult.json();
-
-    router.push(`${projects[0].id}/dashboard`);
-  }
 
   async function onFinish(values: any) {
     setLoading(true);
@@ -48,7 +27,7 @@ export default function LoginComponent() {
 
     const session = await getSession();
 
-    await navigateToDashboard(session?.access);
+    router.push('/tasks');
   }
 
   return (

@@ -1,4 +1,3 @@
-import { MailTwoTone } from '@ant-design/icons';
 import Link from 'next/link';
 import { Modal } from 'antd';
 import React from 'react';
@@ -10,7 +9,7 @@ interface Props {
   setModalVisible: SetLoading;
 }
 
-export default function ConfirmEmailPopUp(
+export default function ConfirmSignUpPopuUp(
   { isVisible, setModalVisible }: Props,
 ) {
   return (
@@ -22,13 +21,8 @@ export default function ConfirmEmailPopUp(
     >
       <div className='text-2xl flex justify-center items-center'>
         <p className='text-center'>
-          Please confirm your email
-          {' '}
-          <MailTwoTone />
-          {' '}
-          and
-          {' '}
-          <Link href='/auth/signin'>log in</Link>
+          You successfully created an accont - please proceed to
+          <Link href='/auth/signin'> log in</Link>
           {' '}
           to continue.
           <br />

@@ -6,16 +6,14 @@ import {
 import React, { useCallback, useState } from 'react';
 import { errorTemplate } from '@/utils/notifications';
 import { post } from '@/utils/requests';
-import ConfirmEmailPopUp
-  from '@/app/auth/signup/ConfirmEmailPopUp';
+import ConfirmSignUpPopuUp
+  from '@/app/auth/signup/ConfirmSignUpPopuUp';
 import SignUpForm from '@/app/auth/signup/SignUpForm';
 
 interface FormData {
   'first_name': string;
   'last_name': string;
   'company': string;
-  'project_name': string;
-  'website_link': string;
   'email': string;
   'password': string;
   'confirm': string;
@@ -29,9 +27,7 @@ export default function RegisterComponent() {
 
   const onFinish = useCallback(async (values: FormData) => {
     setLoading(true);
-    const { project_name, website_link, ...restValues } = values;
-    const project = { name: project_name, website_link };
-    const response = await post({ url: '/api/users/', data: { ...restValues, project } });
+    const response = await post({ url: '/api/users/', data: values });
 
     if (response.ok) {
       form.resetFields();
@@ -66,7 +62,7 @@ export default function RegisterComponent() {
             loading={loading}
           />
 
-          <ConfirmEmailPopUp
+          <ConfirmSignUpPopuUp
             isVisible={modalVisible}
             setModalVisible={setModalVisible}
           />
