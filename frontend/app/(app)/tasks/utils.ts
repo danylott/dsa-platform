@@ -1,8 +1,8 @@
 import { getAuthServer } from '@/utils/authServerRequests';
 import { TaskData } from '@/app/(app)/tasks/TasksTable';
 
-export async function getTasksData() {
-  const res = await getAuthServer('/api/tasks/');
+export async function getTasksData({ difficulty }: { difficulty?: string }) {
+  const res = await getAuthServer(`/api/tasks/?difficulty=${difficulty}`);
 
   const tasksData: TaskData[] = await res.json();
 
@@ -12,7 +12,7 @@ export async function getTasksData() {
 export async function getTaskDetailsData(id: string) {
   const res = await getAuthServer(`/api/tasks/${id}/`);
 
-  const projectData: TaskData = await res.json();
+  const taskData: TaskData = await res.json();
 
-  return projectData;
+  return taskData;
 }

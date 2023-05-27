@@ -96,7 +96,6 @@ interface Props {
 export default function TasksTable({ tasksData }: Props) {
   return (
     <>
-      <h2 className='text-left'>Tasks</h2>
       <Table
         columns={columns}
         dataSource={tasksData}

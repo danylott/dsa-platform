@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import {
   Button, Col, Form, Input, notification, Row, Spin,
 } from 'antd';
-import { getSession, signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { errorTemplate } from '@/utils/notifications';
@@ -24,8 +24,6 @@ export default function LoginComponent() {
 
       return;
     }
-
-    const session = await getSession();
 
     router.push('/tasks');
   }
