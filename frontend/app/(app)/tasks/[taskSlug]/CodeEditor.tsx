@@ -32,6 +32,7 @@ export default function CodeEditor({
       editorProps={{ $blockScrolling: true }}
       readOnly={readOnly}
       height={editorHeight}
+      width="100%"
       setOptions={{
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true,

@@ -44,7 +44,7 @@ def test_code(code: str, test_cases: list[dict[str, str]]) -> dict[str, str]:
                 runtime_ms = int((end_time - start_time) * 1000)
                 return {
                     "status": "ERROR",
-                    "message": error,
+                    "message": f"Input: {inp}\nError:\n{error}",
                     "num_passed_tests": num_passed,
                     "runtime": total_runtime_ms + runtime_ms,
                 }

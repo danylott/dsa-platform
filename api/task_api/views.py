@@ -102,9 +102,6 @@ class TaskSubmissionViewSet(
         return queryset
 
     def get_serializer_class(self) -> Type[Serializer]:
-        if self.action == "list":
-            return TaskSubmissionListSerializer
-
         if self.action == "create":
             return TaskSubmissionCreateSerializer
 

@@ -118,10 +118,10 @@ class TaskDetailSerializer(TaskListSerializer):
 
 
 class TaskSubmissionListSerializer(serializers.ModelSerializer):
-    language = serializers.SerializerMethodField()
+    language_name = serializers.SerializerMethodField()
     status = serializers.SerializerMethodField()
 
-    def get_language(self, obj: TaskSubmission) -> str:
+    def get_language_name(self, obj: TaskSubmission) -> str:
         return obj.language.get_name_display()
 
     def get_status(self, obj: TaskSubmission) -> str:
@@ -129,7 +129,7 @@ class TaskSubmissionListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TaskSubmission
-        fields = ("id", "status", "created_at", "user", "task", "language")
+        fields = ("id", "status", "created_at", "user", "task", "language_name")
 
 
 class TaskSubmissionDetailSerializer(TaskSubmissionListSerializer):
@@ -142,20 +142,45 @@ class TaskSubmissionDetailSerializer(TaskSubmissionListSerializer):
 
 
 class TaskSubmissionCreateSerializer(serializers.ModelSerializer):
+    language_name = serializers.SerializerMethodField()
+
+    def get_language_name(self, obj: TaskSubmission) -> str:
+        return obj.language.get_name_display()
+
     class Meta:
         model = TaskSubmission
-        fields = ("id", "code", "language")
+        fields = (
+            "id",
+            "code",
+            "language",
+            "language_name",
+            "status",
+            "runtime",
+            "result_message",
+            "created_at",
+        )
+        read_only_fields = (
+            "language_name",
+            "status",
+            "runtime",
+            "result_message",
+            "created_at",
+        )
 
 
 class TaskTemplateSerializer(serializers.ModelSerializer):
     language = serializers.SerializerMethodField()
+    language_id = serializers.SerializerMethodField()
 
     def get_language(self, obj: TaskTemplate) -> str:
         return obj.language.get_name_display()
 
+    def get_language_id(self, obj: TaskTemplate) -> int:
+        return obj.language.id
+
     class Meta:
         model = TaskTemplate
-        fields = ("id", "code_template", "language")
+        fields = ("id", "code_template", "language", "language_id")
 
 
 class LanguageSerializer(serializers.ModelSerializer):

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  getTaskDetailData,
+  getTaskDetailData, getTaskSubmissions,
+  getTaskTemplates,
 } from '@/app/(app)/tasks/[taskSlug]/utils';
 import TaskDetail from '@/app/(app)/tasks/[taskSlug]/TaskDetail';
 
@@ -13,11 +14,17 @@ interface Params {
 export default async function TaskDetailPage({ params }: Params) {
   const { taskSlug } = params;
 
-  const taskDetailData = await getTaskDetailData(taskSlug);
+  const [taskDetailData, taskTemplates, taskSubmissions] = await Promise.all([
+    getTaskDetailData(taskSlug),
+    getTaskTemplates(taskSlug),
+    getTaskSubmissions(taskSlug),
+  ]);
 
   return (
     <TaskDetail
       taskDetailData={taskDetailData}
+      taskTemplates={taskTemplates}
+      taskSubmissions={taskSubmissions}
     />
   );
 }
