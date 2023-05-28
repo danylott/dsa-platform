@@ -22,14 +22,14 @@ class TaskAdminForm(forms.ModelForm):
         model = Task
         fields = "__all__"
         widgets = {
-            "solution_code": AceWidget(mode="python", theme="monokai"),
+            "solution_code": AceWidget(mode="python", theme="xcode"),
         }
 
 
 class TaskTestCaseInline(admin.TabularInline):
     formfield_overrides = {
         models.TextField: {
-            "widget": AceWidget(mode="text", theme="monokai", height="80px")
+            "widget": AceWidget(mode="text", theme="xcode", height="80px")
         },
     }
     model = TaskTestCase
@@ -46,7 +46,7 @@ class TaskAdmin(MarkdownxModelAdmin):
 @admin.register(TaskTemplate)
 class TaskTemplateAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        models.TextField: {"widget": AceWidget(mode="text", theme="monokai")},
+        models.TextField: {"widget": AceWidget(mode="text", theme="xcode")},
     }
 
 
@@ -68,7 +68,7 @@ class TopicAdmin(admin.ModelAdmin):
 @admin.register(TaskSubmission)
 class TaskSubmissionAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        models.TextField: {"widget": AceWidget(mode="text", theme="monokai")},
+        models.TextField: {"widget": AceWidget(mode="text", theme="xcode")},
     }
 
 
@@ -76,6 +76,6 @@ class TaskSubmissionAdmin(admin.ModelAdmin):
 class TaskTestCaseAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.TextField: {
-            "widget": AceWidget(mode="text", theme="monokai", height="80px")
+            "widget": AceWidget(mode="text", theme="xcode", height="80px")
         },
     }

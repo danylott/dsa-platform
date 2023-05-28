@@ -6,6 +6,8 @@ import {
   CheckCircleOutlined,
   SyncOutlined,
 } from '@ant-design/icons';
+import Link from 'next/link';
+import TaskData from '@/app/(app)/interfaces/taskData';
 
 const getStatus = (status: string) => {
   switch (status.toLowerCase()) {
@@ -31,20 +33,6 @@ const getDifficulty = (difficulty: string) => {
   }
 };
 
-export interface Topic {
-  id: number;
-  name: string;
-}
-
-export interface TaskData {
-  slug: string;
-  name: string;
-  difficulty: string;
-  topics: Topic[];
-  status: string;
-  acceptance_rate: string;
-}
-
 const columns: ColumnsType<TaskData> = [
   {
     title: 'Status',
@@ -62,6 +50,7 @@ const columns: ColumnsType<TaskData> = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+    render: (_, task) => <Link href={`/tasks/${task.slug}`}>{task.name}</Link>,
   },
   {
     title: 'Acceptance',
