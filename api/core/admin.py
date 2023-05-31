@@ -14,9 +14,6 @@ from .models import (
 )
 
 
-# TODO: add django-jazzmin for better admin page interface
-
-
 class TaskAdminForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -36,17 +33,27 @@ class TaskTestCaseInline(admin.TabularInline):
     extra = 1
 
 
+class TaskTemplatesInline(admin.TabularInline):
+    formfield_overrides = {
+        models.TextField: {
+            "widget": AceWidget(mode="python", theme="xcode", height="80px")
+        },
+    }
+    model = TaskTemplate
+    extra = 1
+
+
 @admin.register(Task)
 class TaskAdmin(MarkdownxModelAdmin):
     form = TaskAdminForm
     filter_horizontal = ("topics",)
-    inlines = (TaskTestCaseInline,)
+    inlines = (TaskTestCaseInline, TaskTemplatesInline)
 
 
 @admin.register(TaskTemplate)
 class TaskTemplateAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        models.TextField: {"widget": AceWidget(mode="text", theme="xcode")},
+        models.TextField: {"widget": AceWidget(mode="python", theme="xcode")},
     }
 
 
@@ -68,7 +75,7 @@ class TopicAdmin(admin.ModelAdmin):
 @admin.register(TaskSubmission)
 class TaskSubmissionAdmin(admin.ModelAdmin):
     formfield_overrides = {
-        models.TextField: {"widget": AceWidget(mode="text", theme="xcode")},
+        models.TextField: {"widget": AceWidget(mode="python", theme="xcode")},
     }
 
 

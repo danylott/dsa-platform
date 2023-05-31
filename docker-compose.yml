@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+      - frontend
+    volumes:
+      - ./nginx:/etc/nginx:cached
+      - ./nginx/local-ssl:/etc/nginx/ssl:cached
+      - ./nginx/nginx.local.conf:/etc/nginx/nginx.conf:cached
+
+  api:
+    restart: always
+    build:
+      context: ./api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/app
+    env_file:
+      - .env
+
+  frontend:
+    restart: always
+    build:
+      context: ./frontend
+      target: runner
+    volumes:
+      - ./frontend:/app
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      SERVER_SIDE_BACKEND_API_URL: http://api:8000

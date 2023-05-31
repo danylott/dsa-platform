@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from core.healthz import healthz_view
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -28,6 +29,7 @@ urlpatterns = [
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger",
     ),
+    path("api/healthz/", healthz_view, name="healthz"),
     path("markdownx/", include("markdownx.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
 ]

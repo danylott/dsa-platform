@@ -1,4 +1,3 @@
-import Topic from '@/app/(app)/interfaces/topic';
 import TaskData from '@/app/(app)/interfaces/taskData';
 
 export default interface TaskDetailData extends TaskData {

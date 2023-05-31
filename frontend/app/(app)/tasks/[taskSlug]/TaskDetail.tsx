@@ -59,9 +59,7 @@ export default function TaskDetail(
           <CodeEditor
             language={taskDetailData.code_language.toLowerCase()}
             code={taskDetailData.solution_code}
-            setCode={() => {
-              console.log('forbidden to change');
-            }}
+            setCode={() => ({})}
             readOnly
           />
         </>

@@ -30,9 +30,7 @@ export default function SubmissionResultInfo({ submissionResult }: Props) {
         <CodeEditor
           language={submissionResult?.language_name.toLowerCase() || ''}
           code={submissionResult?.code || ''}
-          setCode={() => {
-            console.log('forbidden to change');
-          }}
+          setCode={() => ({})}
           readOnly
         />
       </p>

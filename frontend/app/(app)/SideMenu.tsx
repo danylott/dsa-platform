@@ -3,11 +3,7 @@
 import { Layout, Menu } from 'antd';
 import {
   UnorderedListOutlined,
-  SettingOutlined,
-  ProjectOutlined,
   UserOutlined,
-  KeyOutlined,
-  CloudServerOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 

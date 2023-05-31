@@ -31,7 +31,11 @@ interface Props {
 }
 
 export default function TaskSubmissionsTable(
-  { taskSubmissions, setIsSubmissionResultModalOpen, setSubmissionResult }: Props,
+  {
+    taskSubmissions,
+    setIsSubmissionResultModalOpen,
+    setSubmissionResult,
+  }: Props,
 ) {
   const columns: ColumnsType<TaskSubmissionResult> = [
     {
