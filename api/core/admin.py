@@ -74,6 +74,7 @@ class TopicAdmin(admin.ModelAdmin):
 
 @admin.register(TaskSubmission)
 class TaskSubmissionAdmin(admin.ModelAdmin):
+    list_display = ["task", "user", "status"]
     formfield_overrides = {
         models.TextField: {"widget": AceWidget(mode="python", theme="xcode")},
     }

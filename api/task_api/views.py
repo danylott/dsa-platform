@@ -32,6 +32,11 @@ from .serializers import (
 
 User = get_user_model()
 
+API_URLS = {
+    Language.LanguageChoices.PYTHON.value.lower(): "https://28tz15mu48.execute-api.us-east-1.amazonaws.com/check_task",
+    Language.LanguageChoices.JS.value.lower(): "https://us-central1-turnkey-tribute-406312.cloudfunctions.net/task-checker-javascript-dev-first",
+}
+
 
 def toggle_task_reaction(
     user: User, task: Task, reaction: TaskReaction.ReactionChoices
@@ -119,12 +124,13 @@ class TaskSubmissionViewSet(
             {"input": test_case.input, "output": test_case.output}
             for test_case in task.test_cases.all()
         ]
-        # TODO: fix hardcode
-        python_url = "https://28tz15mu48.execute-api.us-east-1.amazonaws.com/check_task"
+ 
+        api_url = API_URLS[serializer.validated_data["language"].name.lower()]
         response = requests.post(
-            python_url,
+            api_url,
             json={"code": code, "test_cases": test_cases},
         )
+        print(response)
         if response.status_code == 200:
             runtime = response.json()["runtime"]
             result_status = response.json()["status"]
