@@ -11,6 +11,7 @@ from .models import (
     Topic,
     TaskSubmission,
     TaskTestCase,
+    BotSettings,
 )
 
 
@@ -87,3 +88,8 @@ class TaskTestCaseAdmin(admin.ModelAdmin):
             "widget": AceWidget(mode="text", theme="xcode", height="80px")
         },
     }
+
+
+@admin.register(BotSettings)
+class BotSettingsAdmin(admin.ModelAdmin):
+    pass

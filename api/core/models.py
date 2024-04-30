@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.text import slugify
 from markdownx.models import MarkdownxField
@@ -114,3 +115,21 @@ class TaskSubmission(TimeStampAbstract):
 
     def __str__(self) -> str:
         return f"{self.task.name} - {self.user.email} - {self.status}"
+
+
+class BotSettings(TimeStampAbstract):
+    chat_id = models.IntegerField(unique=True, db_index=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True
+    )
+    daily_reminder_time = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(23)], null=True
+    )
+    subscriptions = models.ManyToManyField(Topic, blank=True)
+    send_weekly_statistics = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = "Bot settings"
+
+    def __str__(self) -> str:
+        return str(self.chat_id)

@@ -49,8 +49,11 @@ class TaskListSerializer(serializers.ModelSerializer):
         )
 
     def get_status(self, obj: Task) -> str | None:
-        count_submissions = obj.submissions.count()
-        count_accepted_submissions = obj.submissions.filter(
+        user = self.context["request"].user
+        queryset = obj.submissions.filter(user=user)
+
+        count_submissions = queryset.count()
+        count_accepted_submissions = queryset.filter(
             status=TaskSubmission.StatusChoices.ACCEPTED
         ).count()
 
